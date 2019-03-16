@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     View
@@ -7,53 +7,41 @@ import {
 import ContactThumbnail from '../components/ContactThumbnail';
 import DetailListItem from '../components/DetailListItem';
 
-import { fetchRandomContact } from '../utils/api';
-
 import colors from '../utils/colors';
 
-export default class Profile extends Component {
-    state = {
-        contact: {}
-    }
+export default function Profile(props) {
+    const { navigation: { state: { params } } } = props;
+    const { contact } = params;
+    const { avatar, name, email, cell, phone } = contact;
 
-    async componentDidMount() {
-        const contact = await fetchRandomContact();
-
-        this.setState({ contact });
-    }
-
-    render() {
-        const { avatar, name, email, cell, phone } = this.state.contact;
-
-        return (
-            <View style={styles.container}>
-                <View style={styles.avatarSection}>
-                    <ContactThumbnail
-                        avatar={avatar}
-                        name={name}
-                        phone={phone}
-                    />
-                </View>
-                <View style={styles.detailsSection}>
-                    <DetailListItem
-                        icon="mail"
-                        subtitle="Email"
-                        subtitle={email}
-                    />
-                    <DetailListItem
-                        icon="phone"
-                        subtitle="Work"
-                        subtitle={phone}
-                    />
-                    <DetailListItem
-                        icon="smartphone"
-                        subtitle="Personal"
-                        subtitle={cell}
-                    />
-                </View>
+    return (
+        <View style={styles.container}>
+            <View style={styles.avatarSection}>
+                <ContactThumbnail
+                    avatar={avatar}
+                    name={name}
+                    phone={phone}
+                />
             </View>
-        );
-    };
+            <View style={styles.detailsSection}>
+                <DetailListItem
+                    icon="mail"
+                    subtitle="Email"
+                    subtitle={email}
+                />
+                <DetailListItem
+                    icon="phone"
+                    subtitle="Work"
+                    subtitle={phone}
+                />
+                <DetailListItem
+                    icon="smartphone"
+                    subtitle="Personal"
+                    subtitle={cell}
+                />
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

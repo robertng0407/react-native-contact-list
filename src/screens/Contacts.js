@@ -37,6 +37,11 @@ export default class Contacts extends Component {
         }
     };
 
+    navigateToProfile = contact => {
+        const { navigation: { navigate } } = this.props;
+        navigate('Profile', { contact });
+    }
+
     renderContact = ({ item }) => {
         const { name, avatar, phone } = item;
 
@@ -45,6 +50,7 @@ export default class Contacts extends Component {
                 name={name}
                 avatar={avatar}
                 phone={phone}
+                onPress={() => this.navigateToProfile(item)}
             />
         );
     };
