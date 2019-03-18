@@ -53,9 +53,6 @@ const FavoritesScreens = createStackNavigator({
 const UserScreens = createStackNavigator({
     User: {
         screen: User
-    },
-    Profile: {
-        screen: Profile
     }
 }, {
         initialRouteName: 'User',
@@ -74,6 +71,18 @@ const TabNavigator = createBottomTabNavigator({
     },
     User: {
         screen: UserScreens
+    }
+}, {
+    initialRouteName: 'Contacts',
+    tabBarOptions: {
+        style: {
+            backgroundColor: colors.greyLight
+        },
+        showLabel: false,
+        showIcon: true,
+        activeTintColor: colors.blue,
+        inactiveTintColor: colors.greyDark,
+        renderIndicator: () => null
     }
 });
 
