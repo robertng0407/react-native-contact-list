@@ -11,6 +11,7 @@ import Contacts from './src/screens/Contacts';
 import Profile from './src/screens/Profile';
 import Favorites from './src/screens/Favorites';
 import User from './src/screens/User';
+import Options from './src/screens/Options';
 
 const getTabBarIcon = icon => ({ tintColor }) => (
     <MaterialIcons
@@ -53,8 +54,12 @@ const FavoritesScreens = createStackNavigator({
 const UserScreens = createStackNavigator({
     User: {
         screen: User
+    },
+    Options: {
+        screen: Options
     }
 }, {
+        mode: 'modal',
         initialRouteName: 'User',
         navigationOptions: {
             tabBarIcon: getTabBarIcon('person')
@@ -73,17 +78,17 @@ const TabNavigator = createBottomTabNavigator({
         screen: UserScreens
     }
 }, {
-    initialRouteName: 'Contacts',
-    tabBarOptions: {
-        style: {
-            backgroundColor: colors.greyLight
-        },
-        showLabel: false,
-        showIcon: true,
-        activeTintColor: colors.blue,
-        inactiveTintColor: colors.greyDark,
-        renderIndicator: () => null
-    }
-});
+        initialRouteName: 'Contacts',
+        tabBarOptions: {
+            style: {
+                backgroundColor: colors.greyLight
+            },
+            showLabel: false,
+            showIcon: true,
+            activeTintColor: colors.blue,
+            inactiveTintColor: colors.greyDark,
+            renderIndicator: () => null
+        }
+    });
 
 export default createAppContainer(TabNavigator);
