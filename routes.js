@@ -59,7 +59,7 @@ const UserScreens = createStackNavigator({
         screen: Options
     }
 }, {
-        mode: 'modal',
+    mode: 'modal',
         initialRouteName: 'User',
         navigationOptions: {
             tabBarIcon: getTabBarIcon('person')
@@ -78,17 +78,17 @@ const TabNavigator = createBottomTabNavigator({
         screen: UserScreens
     }
 }, {
-        initialRouteName: 'Contacts',
-        tabBarOptions: {
-            style: {
-                backgroundColor: colors.greyLight
-            },
-            showLabel: false,
-            showIcon: true,
-            activeTintColor: colors.blue,
-            inactiveTintColor: colors.greyDark,
-            renderIndicator: () => null
-        }
-    });
+    initialRouteName: 'Contacts',
+    tabBarOptions: {
+        style: {
+            backgroundColor: colors.greyLight
+        },
+        showLabel: false,
+        showIcon: true,
+        activeTintColor: colors.blue,
+        inactiveTintColor: colors.greyDark,
+        renderIndicator: () => null
+    }
+});
 
 export default createAppContainer(TabNavigator);
