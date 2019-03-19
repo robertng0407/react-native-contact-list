@@ -10,9 +10,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ContactThumbnail from '../components/ContactThumbnail';
 
 import colors from '../utils/colors';
-import { fetchUserContact } from '../utils/api';
+import * as actions from '../store/actions';
+import { connect } from 'react-redux';
 
-export default class User extends Component {
+class User extends Component {
     static navigationOptions = ({ navigation: { navigate } }) => ({
         title: 'Me',
         headerTintColor: 'white',
@@ -29,31 +30,13 @@ export default class User extends Component {
         )
     });
 
-    state = {
-        user: {},
-        loading: true,
-        error: false
-    };
-
-    async componentDidMount() {
-        try {
-            const user = await fetchUserContact();
-
-            this.setState({
-                user,
-                loading: false,
-                error: false
-            });
-        } catch (e) {
-            this.setState({
-                loading: false,
-                error: true
-            });
-        }
+    componentDidMount() {
+        const { fetchUserStart } = this.props;
+        fetchUserStart();
     };
 
     render() {
-        const { loading, user, error } = this.state;
+        const { loading, user, error } = this.props;
         const { avatar, name, phone } = user;
 
         return (
@@ -82,3 +65,15 @@ const styles = StyleSheet.create({
         backgroundColor: colors.blue
     }
 });
+
+const mapStateToProps = ({ user }) => ({
+    user: user.user,
+    loading: user.loading,
+    error: user.error
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchUserStart: () => dispatch(actions.fetchUserStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(User);

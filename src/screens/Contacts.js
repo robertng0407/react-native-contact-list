@@ -9,8 +9,6 @@ import {
 import { connect } from 'react-redux';
 
 import ContactListItem from '../components/ContactListItem';
-
-import { fetchContacts } from '../utils/api';
 import * as actions from '../store/actions';
 
 const keyExtractor = ({ phone }) => phone;
