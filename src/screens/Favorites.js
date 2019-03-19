@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { fetchContacts } from '../utils/api';
-
 import ContactThumbnail from '../components/ContactThumbnail';
 
 const keyExtractor = ({ phone }) => phone;
@@ -17,6 +15,13 @@ const keyExtractor = ({ phone }) => phone;
 class Favorites extends Component {
     static navigationOptions = {
         title: 'Favorites'
+    };
+
+    componentDidMount() {
+        const { fetchContactsStart, contacts } = this.props;
+        if (contacts.length === 0) {
+            fetchContactsStart();
+        }
     };
 
     renderFavoriteThumbnail = ({ item }) => {
@@ -67,10 +72,14 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = ({contacts}) => ({
+const mapStateToProps = ({ contacts }) => ({
     contacts: contacts.contacts,
     loading: contacts.loading,
     error: contacts.error
 });
 
-export default connect(mapStateToProps)(Favorites);
+const mapDispatchToProps = dispatch => ({
+    fetchContactsStart: () => dispatch(actions.fetchContactsStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
