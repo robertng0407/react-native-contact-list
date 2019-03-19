@@ -1,0 +1,3 @@
+export {
+    fetchContactsStart
+} from './contacts';

@@ -6,39 +6,23 @@ import {
     FlatList,
     ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import ContactListItem from '../components/ContactListItem';
 
 import { fetchContacts } from '../utils/api';
+import * as actions from '../store/actions';
 
 const keyExtractor = ({ phone }) => phone;
 
-export default class Contacts extends Component {
+class Contacts extends Component {
     static navigationOptions = {
         title: 'Contacts'
     };
 
-    state = {
-        contacts: [],
-        loading: true,
-        error: false
-    };
-
-    async componentDidMount() {
-        try {
-            const contacts = await fetchContacts();
-
-            this.setState({
-                contacts,
-                loading: false,
-                error: false
-            });
-        } catch (e) {
-            this.setState({
-                loading: false,
-                error: true
-            })
-        }
+    componentDidMount() {
+        const {fetchContactsStart} = this.props;
+        fetchContactsStart();
     };
 
     navigateToProfile = contact => {
@@ -60,7 +44,7 @@ export default class Contacts extends Component {
     };
 
     render() {
-        const { loading, contacts, error } = this.state;
+        const { loading, contacts, error } = this.props;
 
         const contactsSorted = contacts.sort((a, b) => (
             a.name.localeCompare(b.name)
@@ -90,3 +74,15 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+const mapStateToProps = state => ({
+    contacts: state.contacts,
+    loading: state.loading,
+    error: state.error
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchContactsStart: () => dispatch(actions.fetchContactsStart())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

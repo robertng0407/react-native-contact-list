@@ -6,6 +6,7 @@ import {
     FlatList,
     ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import { fetchContacts } from '../utils/api';
 
@@ -13,32 +14,9 @@ import ContactThumbnail from '../components/ContactThumbnail';
 
 const keyExtractor = ({ phone }) => phone;
 
-export default class Favorites extends Component {
+class Favorites extends Component {
     static navigationOptions = {
         title: 'Favorites'
-    };
-
-    state = {
-        contacts: [],
-        loading: true,
-        error: false
-    };
-
-    async componentDidMount() {
-        try {
-            const contacts = await fetchContacts();
-
-            this.setState({
-                contacts,
-                loading: false,
-                error: false
-            });
-        } catch (e) {
-            this.setState({
-                loading: false,
-                error: true
-            });
-        }
     };
 
     renderFavoriteThumbnail = ({ item }) => {
@@ -54,7 +32,7 @@ export default class Favorites extends Component {
     };
 
     render() {
-        const { loading, contacts, error } = this.state;
+        const { loading, contacts, error } = this.props;
         const favorites = contacts.filter(contact => contact.favorite);
 
         return (
@@ -76,7 +54,7 @@ export default class Favorites extends Component {
             </View>
         );
     };
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -88,3 +66,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+const mapStateToProps = state => ({
+    contacts: state.contacts,
+    loading: state.loading,
+    error: state.error
+});
+
+export default connect(mapStateToProps)(Favorites);
