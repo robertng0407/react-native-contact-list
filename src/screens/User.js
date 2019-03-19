@@ -30,7 +30,7 @@ export default class User extends Component {
     });
 
     state = {
-        user: [],
+        user: {},
         loading: true,
         error: false
     };

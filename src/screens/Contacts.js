@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = state => ({
-    contacts: state.contacts,
-    loading: state.loading,
-    error: state.error
+const mapStateToProps = ({contacts}) => ({
+    contacts: contacts.contacts,
+    loading: contacts.loading,
+    error: contacts.error
 });
 
 const mapDispatchToProps = dispatch => ({
